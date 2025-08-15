@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Math Calculator + Tables</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #222;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    td, th {
+      border: 1px solid #333;
+      padding: 8px 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Math Calculator</h1>
+
+  <!-- Number inputs -->
+  <input id="num1" type="number" placeholder="Enter first number">
+  <input id="num2" type="number" placeholder="Enter second number">
+  <br>
+
+  <!-- Operation buttons -->
+  <button onclick="calculate('+')">Add (+)</button>
+  <button onclick="calculate('-')">Subtract (-)</button>
+  <button onclick="calculate('*')">Multiply (×)</button>
+  <button onclick="calculate('/')">Divide (÷)</button>
+
+  <p id="calcResult" class="result"></p>
+
+  <hr>
+
+  <h2>Multiplication Table Generator</h2>
+  <input id="tableNum" type="number" placeholder="Enter a number">
+  <input id="limit" type="number" placeholder="Enter limit (e.g. 1000)">
+  <button onclick="generateTable()">Generate Table</button>
+
+  <div id="tableResult"></div>
+
+  <script>
+    // Basic calculator
+    function calculate(op) {
+      let n1 = parseFloat(document.getElementById("num1").value);
+      let n2 = parseFloat(document.getElementById("num2").value);
+      let result;
+
+      if (isNaN(n1) || isNaN(n2)) {
+        document.getElementById("calcResult").innerText = "❌ Please enter both numbers.";
+        return;
+      }
+
+      switch(op) {
+        case '+': result = n1 + n2; break;
+        case '-': result = n1 - n2; break;
+        case '*': result = n1 * n2; break;
+        case '/': 
+          if (n2 === 0) {
+            document.getElementById("calcResult").innerText = "❌ Cannot divide by zero!";
+            return;
+          }
+          result = n1 / n2; 
+          break;
+      }
+      document.getElementById("calcResult").innerText = "Result: " + result;
+    }
+
+    // Multiplication table
+    function generateTable() {
+      let num = parseInt(document.getElementById("tableNum").value);
+      let limit = parseInt(document.getElementById("limit").value);
+
+      if (isNaN(num) || isNaN(limit)) {
+        document.getElementById("tableResult").innerHTML = "<p>❌ Please enter a number and a limit.</p>";
+        return;
+      }
+
+      let html = "<table><tr><th>Expression</th><th>Result</th></tr>";
+      for (let i = 1; i <= limit; i++) {
+        html += `<tr><td>${num} × ${i}</td><td>${num * i}</td></tr>`;
+      }
+      html += "</table>";
+
+      document.getElementById("tableResult").innerHTML = html;
+    }
+  </script>
+</body>
+</html>
